@@ -1,0 +1,863 @@
+
+Conversation with Gemini
+You need to build a Library Management System (core module) with:
+
+
+
+Backend: Java, Spring Boot, MySQL
+
+
+
+Frontend: Angular (TypeScript) + Bootstrap
+
+
+
+Architecture expectation: Clean, modular, scalable, and extensible
+
+
+
+This is a practical assignment designed to evaluate your ability to design and deliver production-style features end-to-end.
+
+
+
+Timebox:
+
+
+
+Expected effort: 1-2 days
+
+
+
+Suggested submission window: within 48 hours of receiving this assignment
+
+
+
+Objective:
+
+
+
+Implement a mini library module where administrators can manage books and members, and users can issue/return books with proper rules and validation.
+
+
+
+Functional Requirements:
+
+
+
+Book Management
+
+
+
+Implement CRUD APIs + UI for books. Each book should include at least:
+
+
+
+id
+
+
+
+title (required)
+
+
+
+author (required)
+
+
+
+isbn (unique, required)
+
+
+
+category/topic
+
+
+
+totalCopies (>= 0)
+
+
+
+availableCopies (>= 0)
+
+
+
+shelfLocation (optional)
+
+
+
+createdAt, updatedAt
+
+
+
+Operations:
+
+
+
+Add a new book
+
+
+
+Update book details (title/author/topic/copies/etc.)
+
+
+
+Delete a book (soft delete preferred; hard delete acceptable with explanation)
+
+
+
+List/search books (by title/author/isbn/topic)
+
+
+
+View book details
+
+
+
+Member/User Management
+
+
+
+Implement basic member handling (simple, no complex auth required unless you choose).
+
+
+
+Member fields (minimum):
+
+
+
+id
+
+
+
+name
+
+
+
+email (unique)
+
+
+
+status (ACTIVE/INACTIVE)
+
+
+
+createdAt
+
+
+
+Operations:
+
+
+
+Add/update/deactivate member
+
+
+
+View member list/details
+
+
+
+Issue/Return (Core Workflow)
+
+
+
+Implement issue and revoke/return workflow with business rules.
+
+
+
+Issue rules (minimum):
+
+
+
+A book can be issued only if availableCopies > 0
+
+
+
+A member cannot issue the same book twice without returning it
+
+
+
+Track:
+
+
+
+issuedAt
+
+
+
+dueDate
+
+
+
+returnedAt (nullable)
+
+
+
+status (ISSUED/RETURNED/OVERDUE)
+
+
+
+Return/Revoke rules:
+
+
+
+Returning a book updates stock (availableCopies + 1)
+
+
+
+Issue updates stock (availableCopies - 1)
+
+
+
+Transaction history should be visible per member and/or per book
+
+
+
+Validation & Error Handling
+
+
+
+Include robust validations and user-friendly error responses/messages:
+
+
+
+Required fields:
+
+
+
+Unique constraints (ISBN, member email)
+
+
+
+Invalid operations (issuing unavailable book, returning already returned record, etc.)
+
+
+
+UI Expectations:
+
+
+
+Build clean, usable Angular pages/components:
+
+
+
+Dashboard or landing page (basic)
+
+
+
+Books list + create/edit form
+
+
+
+Members list + create/edit form
+
+
+
+Issue/Return screen
+
+
+
+Transaction history table
+
+
+
+Basic responsive layout using Bootstrap
+
+
+
+Loading/error/success states
+
+
+
+Non-Functional / Engineering Requirements
+
+
+
+Please ensure:
+
+
+
+Clean code conventions and naming
+
+
+
+Layered architecture (Controller → Service → Repository)
+
+
+
+DTO/request-response separation from entities
+
+
+
+Global exception handling
+
+
+
+Reusable frontend services/components
+
+
+
+Environment-based config (application.yml profiles or equivalent)
+
+
+
+Proper DB schema design with relationships and indexes
+
+
+
+Readable commit history (small, meaningful commits)
+
+
+
+Preferred Design Principles:
+
+
+
+SOLID principles
+
+
+
+Separation of concerns
+
+
+
+Extensibility for future ERP integration
+
+
+
+Defensive coding and null/edge case handling
+
+
+
+Minimum Technical Scope
+
+
+
+Backend (Spring Boot):
+
+
+
+REST APIs with clear endpoint naming
+
+
+
+JPA/Hibernate models
+
+
+
+MySQL integration
+
+
+
+Migration scripts (Flyway/Liquibase preferred)
+
+
+
+API documentation (Swagger/OpenAPI preferred)
+
+
+
+Frontend (Angular):
+
+
+
+Feature module structure
+
+
+
+Angular service layer for API calls
+
+
+
+Reactive forms preferred
+
+
+
+Routing for major screens
+
+
+
+Bootstrap-based UI
+
+
+
+Bonus (Optional)
+
+
+
+Any of these can strengthen your submission:
+
+
+
+Role-based access (Admin/Librarian/User)
+
+
+
+Pagination, sorting, filtering
+
+
+
+Unit/integration tests
+
+
+
+Overdue fine calculation
+
+
+
+Audit logs
+
+
+
+Caching strategy
+
+
+
+Basic observability (logs/health checks)
+
+
+
+Important Notes
+
+
+
+This assignment should be your own work.
+
+
+
+1.You may use open-source libraries/frameworks appropriately.
+
+
+
+Give working code with proper structuring 
+
+Building a complete, production-ready Library Management System (LMS) end-to-end requires dozens of files, configuration, and boilerplate. Since providing a fully runnable, zipped repository in a single response isn't feasible, I will provide the complete architectural structure, database schema, and the core implementation files (Backend & Frontend) that demonstrate the exact business logic, design patterns, and clean code principles requested in your assignment.
+
+You can use these core files as the exact blueprint to generate or paste into your Spring Boot and Angular projects.
+
+1. Architecture & Tech Stack Setup
+Backend: Spring Boot 3.x, Java 17+, Spring Data JPA, MySQL 8, Lombok, MapStruct (optional, or manual mapping), SpringDoc OpenAPI (Swagger).
+
+Frontend: Angular 17+ (Standalone components), Bootstrap 5, RxJS.
+
+Design Patterns: Layered Architecture (Controller → Service → Repository), DTO pattern, Global Exception Handling, Soft Deletion.
+
+Database Schema (Flyway/Liquibase concept)
+books: id (PK), title, author, isbn (UNIQUE), category, total_copies, available_copies, is_deleted.
+
+members: id (PK), name, email (UNIQUE), status (ACTIVE/INACTIVE).
+
+issue_records: id (PK), book_id (FK), member_id (FK), issued_at, due_date, returned_at, status (ISSUED/RETURNED/OVERDUE).
+
+2. Backend Implementation (Spring Boot)
+A. Entities
+Here is the core entity setup demonstrating relationships and soft delete.
+
+Java
+// Book.java
+@Entity
+@Table(name = "books")
+@SQLRestriction("is_deleted = false") // Hibernate 6 soft delete approach
+@Data // Lombok for getters/setters
+@NoArgsConstructor
+public class Book {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false) private String title;
+    @Column(nullable = false) private String author;
+    @Column(nullable = false, unique = true) private String isbn;
+    
+    private String category;
+    
+    @Column(nullable = false) private Integer totalCopies;
+    @Column(nullable = false) private Integer availableCopies;
+    
+    private String shelfLocation;
+    
+    @Column(nullable = false) private boolean isDeleted = false;
+    
+    @CreationTimestamp private LocalDateTime createdAt;
+    @UpdateTimestamp private LocalDateTime updatedAt;
+}
+
+// Member.java
+@Entity
+@Table(name = "members")
+@Data
+public class Member {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false) private String name;
+    @Column(nullable = false, unique = true) private String email;
+    
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status; // ACTIVE, INACTIVE
+    
+    @CreationTimestamp private LocalDateTime createdAt;
+}
+
+// IssueRecord.java
+@Entity
+@Table(name = "issue_records")
+@Data
+public class IssueRecord {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
+
+    @Column(nullable = false) private LocalDate issuedAt;
+    @Column(nullable = false) private LocalDate dueDate;
+    private LocalDate returnedAt;
+
+    @Enumerated(EnumType.STRING)
+    private IssueStatus status; // ISSUED, RETURNED, OVERDUE
+}
+B. Core Business Logic (The Issue/Return Service)
+This handles the strict validations and transactional updates required by the assignment.
+
+Java
+// IssueService.java
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class IssueService {
+
+    private final IssueRecordRepository issueRepo;
+    private final BookRepository bookRepo;
+    private final MemberRepository memberRepo;
+
+    @Transactional
+    public IssueResponseDto issueBook(IssueRequestDto request) {
+        Book book = bookRepo.findById(request.getBookId())
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+        
+        Member member = memberRepo.findById(request.getMemberId())
+                .orElseThrow(() -> new ResourceNotFoundException("Member not found"));
+
+        // Rule 1: Member must be active
+        if (member.getStatus() != MemberStatus.ACTIVE) {
+            throw new BusinessRuleException("Cannot issue book: Member is inactive.");
+        }
+
+        // Rule 2: Check available copies
+        if (book.getAvailableCopies() <= 0) {
+            throw new BusinessRuleException("Cannot issue book: No available copies.");
+        }
+
+        // Rule 3: Member cannot issue the same book twice without returning it
+        boolean alreadyIssued = issueRepo.existsByBookIdAndMemberIdAndStatus(
+                book.getId(), member.getId(), IssueStatus.ISSUED);
+        if (alreadyIssued) {
+            throw new BusinessRuleException("Member already has an active issue for this book.");
+        }
+
+        // Update Stock
+        book.setAvailableCopies(book.getAvailableCopies() - 1);
+        bookRepo.save(book);
+
+        // Create Record
+        IssueRecord record = new IssueRecord();
+        record.setBook(book);
+        record.setMember(member);
+        record.setIssuedAt(LocalDate.now());
+        record.setDueDate(LocalDate.now().plusDays(14)); // Standard 14-day policy
+        record.setStatus(IssueStatus.ISSUED);
+        
+        IssueRecord savedRecord = issueRepo.save(record);
+        log.info("Book {} issued to Member {}", book.getId(), member.getId());
+        
+        return mapToDto(savedRecord);
+    }
+
+    @Transactional
+    public IssueResponseDto returnBook(Long issueId) {
+        IssueRecord record = issueRepo.findById(issueId)
+                .orElseThrow(() -> new ResourceNotFoundException("Issue record not found"));
+
+        if (record.getStatus() == IssueStatus.RETURNED) {
+            throw new BusinessRuleException("Book is already returned.");
+        }
+
+        // Update Record
+        record.setReturnedAt(LocalDate.now());
+        record.setStatus(IssueStatus.RETURNED);
+
+        // Update Stock
+        Book book = record.getBook();
+        book.setAvailableCopies(book.getAvailableCopies() + 1);
+        bookRepo.save(book);
+
+        IssueRecord updatedRecord = issueRepo.save(record);
+        log.info("Issue Record {} returned. Book stock incremented.", issueId);
+        
+        return mapToDto(updatedRecord);
+    }
+}
+C. Global Exception Handling
+Essential for converting internal Java exceptions into clean, readable JSON for the Angular frontend.
+
+Java
+// GlobalExceptionHandler.java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessRule(BusinessRuleException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("BUSINESS_RULE_VIOLATION", ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse("CONFLICT", "Database constraint violated (e.g., duplicate ISBN/Email)"));
+    }
+}
+D. REST Controllers
+Ensure DTOs are used so you don't expose DB entities directly.
+
+Java
+// BookController.java
+@RestController
+@RequestMapping("/api/v1/books")
+@RequiredArgsConstructor
+public class BookController {
+    
+    private final BookService bookService;
+
+    @GetMapping
+    public ResponseEntity<Page<BookDto>> getAllBooks(Pageable pageable) {
+        return ResponseEntity.ok(bookService.getAllBooks(pageable));
+    }
+
+    @PostMapping
+    public ResponseEntity<BookDto> addBook(@Valid @RequestBody BookCreateDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        bookService.softDeleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+3. Frontend Implementation (Angular 17+)
+A. Folder Structure Recommendation
+Use a feature-based modular structure for scalability:
+
+Plaintext
+src/
+ ├── app/
+ │    ├── core/                  # Interceptors, Error Handlers
+ │    ├── shared/                # UI Components, Pipes, Models
+ │    ├── features/
+ │    │    ├── books/            # Book list, form components
+ │    │    ├── members/          # Member list, form components
+ │    │    └── issues/           # Issue dashboard, active issues table
+ │    ├── app.routes.ts          # Main routing
+ │    └── app.config.ts          # Provide HttpClient, Routers
+B. API Service Layer
+Keep API calls centralized and typed.
+
+TypeScript
+// src/app/core/services/issue.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+export interface IssueRequest {
+  bookId: number;
+  memberId: number;
+}
+
+export interface IssueResponse {
+  id: number;
+  bookTitle: string;
+  memberName: string;
+  issuedAt: string;
+  dueDate: string;
+  status: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class IssueService {
+  private apiUrl = `${environment.apiUrl}/issues`;
+
+  constructor(private http: HttpClient) {}
+
+  issueBook(data: IssueRequest): Observable<IssueResponse> {
+    return this.http.post<IssueResponse>(`${this.apiUrl}/issue`, data);
+  }
+
+  returnBook(issueId: number): Observable<IssueResponse> {
+    return this.http.post<IssueResponse>(`${this.apiUrl}/return/${issueId}`, {});
+  }
+
+  getActiveIssues(): Observable<IssueResponse[]> {
+    return this.http.get<IssueResponse[]>(`${this.apiUrl}/active`);
+  }
+}
+C. The Issue Screen Component (Reactive Forms)
+This component handles the complex workflow of issuing a book and displaying errors gracefully.
+
+TypeScript
+// src/app/features/issues/issue-dashboard.component.ts
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { IssueService } from '../../core/services/issue.service';
+
+@Component({
+  selector: 'app-issue-dashboard',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <div class="container mt-4">
+      <h2>Issue a Book</h2>
+      
+      <!-- Error Alert -->
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+      <!-- Issue Form -->
+      <form [formGroup]="issueForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm mb-5">
+        <div class="row">
+          <div class="col-md-5 mb-3">
+            <label class="form-label">Book ID</label>
+            <input type="number" formControlName="bookId" class="form-control" [class.is-invalid]="isInvalid('bookId')">
+          </div>
+          <div class="col-md-5 mb-3">
+            <label class="form-label">Member ID</label>
+            <input type="number" formControlName="memberId" class="form-control" [class.is-invalid]="isInvalid('memberId')">
+          </div>
+          <div class="col-md-2 d-flex align-items-end mb-3">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="issueForm.invalid || isLoading">
+              {{ isLoading ? 'Processing...' : 'Issue Book' }}
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Active Issues Table -->
+      <h3>Active Issues</h3>
+      <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Book Title</th>
+            <th>Member</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let issue of activeIssues">
+            <td>{{ issue.id }}</td>
+            <td>{{ issue.bookTitle }}</td>
+            <td>{{ issue.memberName }}</td>
+            <td>{{ issue.dueDate | date }}</td>
+            <td>
+              <button class="btn btn-sm btn-success" (click)="returnBook(issue.id)">Return</button>
+            </td>
+          </tr>
+          <tr *ngIf="activeIssues.length === 0">
+            <td colspan="5" class="text-center">No active issues found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `
+})
+export class IssueDashboardComponent implements OnInit {
+  issueForm: FormGroup;
+  activeIssues: any[] = [];
+  isLoading = false;
+  errorMessage = '';
+  successMessage = '';
+
+  constructor(private fb: FormBuilder, private issueService: IssueService) {
+    this.issueForm = this.fb.group({
+      bookId: ['', [Validators.required, Validators.min(1)]],
+      memberId: ['', [Validators.required, Validators.min(1)]]
+    });
+  }
+
+  ngOnInit() {
+    this.loadActiveIssues();
+  }
+
+  isInvalid(field: string): boolean {
+    const ctrl = this.issueForm.get(field);
+    return !!(ctrl && ctrl.invalid && (ctrl.dirty || ctrl.touched));
+  }
+
+  loadActiveIssues() {
+    this.issueService.getActiveIssues().subscribe(
+      res => this.activeIssues = res,
+      err => this.errorMessage = 'Failed to load issues'
+    );
+  }
+
+  onSubmit() {
+    if (this.issueForm.invalid) return;
+    
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.issueService.issueBook(this.issueForm.value).subscribe({
+      next: (res) => {
+        this.successMessage = 'Book issued successfully!';
+        this.issueForm.reset();
+        this.loadActiveIssues(); // Refresh table
+        this.isLoading = false;
+      },
+      error: (err) => {
+        // Map backend GlobalExceptionHandler messages
+        this.errorMessage = err.error.message || 'An error occurred during issue.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  returnBook(issueId: number) {
+    if(!confirm('Confirm return of this book?')) return;
+
+    this.issueService.returnBook(issueId).subscribe({
+      next: () => {
+        this.successMessage = 'Book returned successfully!';
+        this.loadActiveIssues();
+      },
+      error: (err) => this.errorMessage = err.error.message || 'Return failed.'
+    });
+  }
+}
+4. Engineering Practices Applied
+Soft Deletion: The @SQLRestriction on the Book entity means bookRepo.findAll() will automatically ignore deleted books. This preserves historical integrity for the IssueRecord table.
+
+Concurrency/Transactions: The @Transactional annotation on the IssueService methods ensures that if a database save fails mid-operation (e.g., updating the stock succeeds but writing the issue record fails), the entire transaction rolls back, preventing data corruption.
+
+Separation of Concerns: Controllers only handle HTTP/Routing. Services only handle business logic. Repositories only handle DB access.
+
+Defensive Validation: We check available stock, duplicate issues, and member status before mutating data, throwing custom BusinessRuleExceptions which are neatly caught by the ControllerAdvice and passed to Angular.
+
+
+
+
+Gemini is AI and can make mistakes.
+

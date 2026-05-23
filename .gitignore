@@ -1,0 +1,36 @@
+# Maven Build Output
+target/
+*.class
+
+# Embedded Local Maven Binary (optional to ignore, recommended to prevent repo bloat)
+maven/
+
+# Node / Angular Build Output and Dependencies
+node_modules/
+dist/
+.angular/
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# IDE / Editor Files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.metadata/
+
+# OS Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs and Temporary files
+*.log
+temp/
+tmp/
